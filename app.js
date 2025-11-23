@@ -86,7 +86,27 @@ window.addEventListener('DOMContentLoaded', async () => {
         try {
             const userData = JSON.parse(savedSession);
             setCurrentUser(userData);
-            showUserDashboard(userData, allScreens);
+            
+            // Restore the appropriate screen based on user role
+            if (userData.funcao === 'ATENDENTE' || userData.funcao === 'ATENDENTE COBOM') {
+                showScreen(attendanceScreen, allScreens);
+            } else if (userData.funcao === 'DESPACHADOR' || userData.funcao === 'DESPACHADOR COBOM') {
+                await showDispatcherScreen(userData, allScreens);
+            } else if (userData.funcao === 'SUPERVISOR') {
+                await showSupervisorScreen(userData, allScreens);
+            } else if (userData.funcao === 'SUPERVISOR COBOM') {
+                await showSupervisorCobomScreen(userData, allScreens);
+            } else {
+                showScreen(userDashboard, allScreens);
+                const userInfo = document.getElementById('userInfo');
+                let infoHTML = '';
+                if (userData.tipo === 'CIVIL') {
+                    infoHTML = `<p style="margin: 5px 0;"><strong>Nome:</strong> ${userData.nomeCompleto} | <strong>CPF:</strong> ${userData.cpf} | <strong>Função:</strong> ${userData.funcao}</p>`;
+                } else {
+                    infoHTML = `<p style="margin: 5px 0;"><strong>${userData.graduacao} ${userData.nomeGuerra}</strong> | <strong>RE:</strong> ${userData.re} | <strong>Função:</strong> ${userData.funcao}</p>`;
+                }
+                userInfo.innerHTML = infoHTML;
+            }
         } catch (error) {
             console.error('Error restoring session:', error);
             localStorage.removeItem('copomUserSession');

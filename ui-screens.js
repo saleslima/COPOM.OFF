@@ -55,15 +55,6 @@ export async function showSupervisorCobomScreen(userData, allScreens) {
     
     const dispatcherHeader = document.querySelector('.dispatcher-header');
     
-    // Add logo
-    if (!dispatcherHeader.querySelector('.copom-logo')) {
-        const logo = document.createElement('img');
-        logo.src = 'LOGO.PNG';
-        logo.alt = 'COPOM Logo';
-        logo.className = 'copom-logo';
-        dispatcherHeader.insertBefore(logo, dispatcherHeader.firstChild);
-    }
-    
     dispatcherHeader.innerHTML = `
         <img src="LOGO.PNG" alt="COPOM Logo" class="copom-logo">
         <h1>Despachador - Ocorrências por BTL</h1>
@@ -87,14 +78,12 @@ export async function showSupervisorCobomScreen(userData, allScreens) {
         </div>
     `;
     
-    // Store selected BTL globally for VTR filtering
     window.selectedBTL = null;
     
     document.querySelectorAll('.btn-btl-selector').forEach(btn => {
         btn.addEventListener('click', async () => {
             const btl = btn.getAttribute('data-btl');
             
-            // Store selected BTL
             window.selectedBTL = btl;
             
             document.getElementById('selectedBtlName').textContent = btl;
@@ -150,7 +139,6 @@ export async function showSupervisorScreen(userData, allScreens) {
     
     dispatcherInfo.innerHTML = infoHTML;
     
-    // Check if user is from ESPECIALIDADES service
     if (userData.servico === 'ESPECIALIDADES') {
         const especialidadesBtls = ['1ºBPTRAN', '2ºBPTRAN', 'CHOQUE'];
         
@@ -178,14 +166,12 @@ export async function showSupervisorScreen(userData, allScreens) {
             </div>
         `;
         
-        // Store selected BTL globally for VTR filtering
         window.selectedBTL = null;
         
         document.querySelectorAll('.btn-btl-selector').forEach(btn => {
             btn.addEventListener('click', async () => {
                 const btl = btn.getAttribute('data-btl');
                 
-                // Store selected BTL
                 window.selectedBTL = btl;
                 
                 document.getElementById('selectedBtlName').textContent = btl;
@@ -270,14 +256,12 @@ export async function showSupervisorScreen(userData, allScreens) {
         </div>
     `;
     
-    // Store selected BTL globally for VTR filtering
     window.selectedBTL = null;
     
     document.querySelectorAll('.btn-btl-selector').forEach(btn => {
         btn.addEventListener('click', async () => {
             const btl = btn.getAttribute('data-btl');
             
-            // Store selected BTL
             window.selectedBTL = btl;
             
             document.getElementById('selectedBtlName').textContent = btl;
@@ -334,7 +318,6 @@ export async function showDispatcherScreen(userData, allScreens) {
         infoHTML = `<p style="margin: 5px 0;"><strong>${userData.graduacao} ${userData.nomeGuerra}</strong> | <strong>RE:</strong> ${userData.re} | <strong>${labelText}:</strong> ${userData.paValue}</p>`;
     }
     
-    // Add logo to dispatcher header
     dispatcherHeader.innerHTML = `
         <img src="LOGO.PNG" alt="COPOM Logo" class="copom-logo">
         <h1>Despachador - Ocorrências por BTL</h1>

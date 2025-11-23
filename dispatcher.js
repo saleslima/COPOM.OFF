@@ -111,6 +111,29 @@ export async function loadDispatcherOcorrencias(btlNumber, dispatcherContent) {
 
         const { setupDispatcherSearch } = await import('./dispatcher-search.js');
         setupDispatcherSearch();
+        
+        // Setup VTR cadastro button
+        const btnCadastrarVTR = document.getElementById('btnCadastrarVTR');
+        if (btnCadastrarVTR) {
+            // Remove any existing listeners
+            const newBtn = btnCadastrarVTR.cloneNode(true);
+            btnCadastrarVTR.parentNode.replaceChild(newBtn, btnCadastrarVTR);
+            
+            newBtn.addEventListener('click', async () => {
+                const vtrNumber = document.getElementById('vtrCadastroInput').value.trim().toUpperCase();
+
+                if (!vtrNumber) {
+                    alert('Por favor, digite o número da VTR');
+                    return;
+                }
+
+                const success = await registerVTR(vtrNumber);
+
+                if (success) {
+                    document.getElementById('vtrCadastroInput').value = '';
+                }
+            });
+        }
     } catch (error) {
         dispatcherContent.innerHTML = '<p>Erro ao carregar ocorrências: ' + error.message + '</p>';
     }
